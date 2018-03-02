@@ -1,0 +1,40 @@
+{
+  prefix [com seanshubin]
+  name [learn wordpress]
+  description 'Learn WordPress'
+  version 0.1-SNAPSHOT
+  developer {
+    name 'Sean Shubin'
+    githubName SeanShubin
+    mavenUserName SeanShubin
+    organization 'Sean Shubin'
+    url http://seanshubin.com/
+  }
+  dependencies {
+    scala-library {
+      group org.scala-lang
+      artifact scala-library
+    }
+    scala-test {
+      group org.scalatest
+      artifact scalatest_2.12
+      scope test
+    }
+    mysql {
+      group    mysql
+      artifact mysql-connector-java
+      lockedAtVersion 8.0.9-rc
+    }
+  }
+  global [scala-library scala-test]
+  modules {
+    console         [domain]
+    domain          [mysql]
+    prototype       [domain]
+  }
+  detangler [console]
+  consoleEntryPoint {
+    console com.seanshubin.learn.wordpress.EntryPoint
+  }
+}
+
