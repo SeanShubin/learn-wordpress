@@ -3,7 +3,8 @@ package com.seanshubin.learn.wordpress.prototype
 import java.sql._
 
 object MySqlDump extends App {
-  val emit = new CompositeEmit(new PathEmit("target/report.txt"), println)
+  val reportPath = args(0)
+  val emit = new CompositeEmit(new PathEmit(reportPath), println)
 
   withConnection{ conn =>
     val showTables: Iterator[String] = conn.exec("show tables", rowToString)
