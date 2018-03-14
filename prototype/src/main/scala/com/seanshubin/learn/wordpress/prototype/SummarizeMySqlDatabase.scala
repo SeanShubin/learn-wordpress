@@ -2,8 +2,10 @@ package com.seanshubin.learn.wordpress.prototype
 
 import java.sql._
 
-object MySqlDump extends App {
+object SummarizeMySqlDatabase extends App {
   val reportPath = args(0)
+  val databaseName = args(1)
+  val databasePassword = args(2)
   val emit = new CompositeEmit(new PathEmit(reportPath), println)
 
   withConnection{ conn =>
@@ -13,10 +15,10 @@ object MySqlDump extends App {
   }
 
   def withConnection[T](connectionFunction: ConnectionOperations => T):T = {
-    Class.forName("com.mysql.jdbc.Driver")
+//    Class.forName("com.mysql.jdbc.Driver")
     val conn =
       DriverManager.getConnection(
-        "jdbc:mysql://localhost:8889/foo", "root","root")
+        s"jdbc:mysql://localhost:8889/$databaseName?serverTimezone=UTC", "root",databasePassword)
     try {
       connectionFunction(new ConnectionOperations(conn))
     } catch {
